@@ -44,20 +44,22 @@ class App extends Component {
       this.saveStateToLocalStorage.bind(this)
     );
    
-    
-    this.setState({
-      filteredtodos: this.state.todos
+    var todosLatest= localStorage.getItem("todos");
+    todosLatest=JSON.parse(todosLatest);
+
+   this.setState({
+      filteredtodos:todosLatest
     });
   }
 
-  componentWillUnmount() {
+  componentWillUnmount() {    
     window.removeEventListener(
       "beforeunload",
       this.saveStateToLocalStorage.bind(this)
     );
-
-    // saves if component has a chance to unmount
+     // saves if component has a chance to unmount
     this.saveStateToLocalStorage();
+   
 }
 
 hydrateStateWithLocalStorage=()=> {
@@ -71,7 +73,8 @@ hydrateStateWithLocalStorage=()=> {
       // parse the localStorage string and setState
       try {
         value = JSON.parse(value);
-        this.setState({ [key]: value });
+        this.setState({ [key]: value },()=>{console.log("output inline with setstate",this.state[key])});
+        console.log("Using right after setstate",this.state[key]);
       } catch (e) {
         // handle empty string
         this.setState({ [key]: value });
@@ -84,7 +87,9 @@ saveStateToLocalStorage=()=> {
   // for every item in React state
   for (let key in this.state) {
     // save to localStorage
+    console.log("Items getting stored in local storage after refresh");
     localStorage.setItem(key, JSON.stringify(this.state[key]));
+   
   }
 }
 
@@ -128,11 +133,12 @@ saveStateToLocalStorage=()=> {
       
      this.setState({ 
        todos:this.state.todos.map( todo =>{
-        if(todo.id=== id)
+         if(todo.id=== id)
         { 
          
           todo.title= edittedTodo;
           todo.madeat= edittedat; 
+          
  
         }
        return todo
@@ -153,7 +159,7 @@ saveStateToLocalStorage=()=> {
 
  
   render() {
-
+   
     
 
     return (

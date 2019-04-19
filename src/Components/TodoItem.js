@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import TodoCard from './Layouts/TodoCard';
 export class TodoItem extends Component {
   constructor (props){
    super(props);
    this.state={ editing:false,
                 edittedTodo:'' ,
-                edittedat: null
+                edittedat: null,
+                editingFirstTime: true
               }
 
   }
@@ -30,15 +32,30 @@ export class TodoItem extends Component {
  } */
 
  handleEditing=(e) =>{
- this.setState(
-  {
- editing:true,
- edittedTodo:e.target.value,
- edittedat:Date.now()
+
+  if(this.state.editingFirstTime)
+{
+ this.setState({editing:true,
+ edittedTodo:this.props.todo.title,
+ edittedat:Date.now()});
+ this.setState({editingFirstTime:false},()=>{
+  this.props.editTodo(this.props.todo.id,this.state.edittedTodo,this.state.edittedat);
+ });
+ 
+
+}
+ else
+ {
+  this.setState({editing:true,
+  edittedTodo:e.target.value,
+  edittedat:Date.now()},()=>{
+    this.props.editTodo(this.props.todo.id,this.state.edittedTodo,this.state.edittedat);
   });
- this.props.editTodo(this.props.todo.id,this.state.edittedTodo,this.state.edittedat);
 
  }
+ }
+
+ 
 
  handleEditingDone=(e)=>{
   if(e.keyCode===13)
@@ -61,7 +78,7 @@ export class TodoItem extends Component {
       const viewStyle=
      {
        backgroundColor:'lightblue'
-
+      
      }
 
      if(this.state.editing){
@@ -86,12 +103,12 @@ export class TodoItem extends Component {
   
     return (
      
-     <ul>
+     <div>
       < div style= {viewStyle} onDoubleClick=
       {this.handleEditing} >
         <p>
       <input type="checkbox" onChange={ this.props.markComplete.bind(this,id)} />
-        {title + "  madeat  "  + formattedtimestamp}
+        {title + "  made at  "  + formattedtimestamp}
 
       <button onClick={this.props.delTodo.bind(this,id)} style={btnStyle}> x </button>
        </p>
@@ -103,7 +120,8 @@ export class TodoItem extends Component {
             onKeyDown={this.handleEditingDone}
             onChange={this.handleEditing}
             value={this.state.edittedTodo}/>
-    </ul>
+      <TodoCard todo={this.props.todo} delTodo={this.props.delTodo}/>
+    </div>
     )
   }
 } 

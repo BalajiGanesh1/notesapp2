@@ -1,0 +1,8 @@
+.deleteIcon {
+ 
+    right: 2px;
+    cursor: pointer;
+}
+.fa {
+    transform: translateY(-40%);
+}
