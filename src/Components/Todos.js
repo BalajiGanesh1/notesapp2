@@ -15,7 +15,7 @@ export class Todos extends Component {
           
             <TodoItem key={disp.id} todo ={disp} editTodo={this.props.editTodo} delTodo={this.props.delTodo} markComplete={this.props.markComplete}/>
               
-            ))
+            ));
                  
     }
 }

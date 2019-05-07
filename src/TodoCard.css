@@ -1,8 +1,20 @@
+
+.fullCard{
+    display: flexbox;
+    z-index: 1;
+}
+
+.cardFooter{
+    display: none;
+}
+
 .deleteIcon {
- 
     right: 2px;
     cursor: pointer;
 }
 .fa {
     transform: translateY(-40%);
 }
+
+/***DISPLAYING THE CARD FOOTER ON HOVERING ON THE CARD**/
+.fullCard:hover .cardFooter{display: inline-block; }

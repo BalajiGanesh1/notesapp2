@@ -7,11 +7,14 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import '../../../src/TodoCard.css';
+// import TodoCardMenu from './TodoCardMenu.js';
 
 const styles = {
   card: {
-    maxWidth: '19%',
-    backgroundColor:'lightgreen'
+    minWidth: '90vw',
+    backgroundColor:'lightgreen',
+    width:'30vw',
+    minHeight:'20vh'
   },
   bullet: {
     display: 'inline-block',
@@ -180,11 +183,13 @@ function TodoCard(props) {
   console.log(currentTimeStamp);
   console.log(minimisedTimeStamp);
   return (
+    <div>
+    <div className= "fullCard" data-toggle="modal" data-target="#myModal">
     <Card className={classes.card}>
       <CardContent>
-      <div class="deleteIcon" onClick={props.delTodo.bind(this,id)}>
-        <i class="fas fa-trash"></i>
-      </div>
+      
+     
+        {/* <TodoCardMenu todo={props.todo} delTodo= {props.delTodo}/> */}
         <Typography variant="h5" component="h1">
           {title}
         </Typography>
@@ -195,12 +200,43 @@ function TodoCard(props) {
           <br />
          
         </Typography>
+        
       </CardContent>
+
+      <div className="cardFooter">
+        <div className="deleteIcon" onClick={props.delTodo.bind(this, id)}>
+          <i class="fas fa-trash"></i>
+        </div>
+      </div>
+      
      
-      <Typography className={classes.pos} color="textSecondary">
+      {/* <Typography className={classes.pos} color="textSecondary">
          Edited {minimisedTimeStamp}
-        </Typography>
+        </Typography> */}
     </Card>
+    </div>
+    
+     {/* Modal  */}
+    <div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+   {/* Modal content */}
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+    </div>
   );
 }
 
